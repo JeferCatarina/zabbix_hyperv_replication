@@ -18,8 +18,8 @@ If ( $args[0] -eq "lastsync") {
     $SRVNAME = $args[1]
     $LASTSYNC = Measure-VMReplication | Where-Object {$_.Name -like "$SRVNAME"} | select LReplTime | ft -HideTableHeaders | Out-String
     $LASTSYNC = $LASTSYNC.Trim()
-    $DATE1 = Get-Date -Date "01/01/1970"
-    $DATE2 = Get-Date -Date "$LASTSYNC" -Format G
+    $LASTSYNC = Get-Date -Date "$LASTSYNC" -Format "yyyy/MM/dd HH:mm:ss"
+    $DATE1 = Get-Date -Date "01/01/1970" -Format "yyyy/MM/dd HH:mm:ss"
     $DATE2 = [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId($LASTSYNC, [System.TimeZoneInfo]::Local.Id, 'GMT Standard Time')
     (New-TimeSpan -Start $DATE1 -End $DATE2).TotalSeconds
 }
